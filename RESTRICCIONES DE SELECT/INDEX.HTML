@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Actualizar Opciones</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #FFF;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        
+        select {
+            background-color: #333;
+            color: #FFF;
+            border: 2px solid #555;
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        select:hover {
+            border-color: #AAA;
+            box-shadow: 0 0 10px #AAA;
+        }
+
+        select:focus {
+            border-color: #F00;
+            box-shadow: 0 0 10px #F00;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 10px #F00;
+            }
+            50% {
+                box-shadow: 0 0 20px #F00;
+            }
+            100% {
+                box-shadow: 0 0 10px #F00;
+            }
+        }
+
+        select:focus {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <h1>Actualizar Opciones</h1>
+    <select name="fachada">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+    </select>
+
+    <select name="fachada">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+    </select>
+
+    <select name="fachada">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+    </select>
+
+    <script>
+        function handleChange(event) {
+            var selectedValue = event.target.value;
+            var selects = document.querySelectorAll('select[name="fachada"]');
+
+            // Verifica si la opción seleccionada ya está seleccionada en otro select
+            selects.forEach(function(select) {
+                if (select !== event.target && select.value === selectedValue) {
+                    // Intercambia los valores de los selectores
+                    var temp = select.value;
+                    select.value = event.target.getAttribute('data-prev');
+                    event.target.value = temp;
+                }
+            });
+
+            // Actualiza el atributo data-prev del select que desencadenó el cambio
+            event.target.setAttribute('data-prev', selectedValue);
+        }
+
+        window.onload = function() {
+            var selects = document.querySelectorAll('select[name="fachada"]');
+            selects.forEach(function(select) {
+                // Establece el valor inicial del atributo data-prev
+                select.setAttribute('data-prev', select.value);
+                select.addEventListener('change', handleChange);
+            });
+        };
+    </script>
+</body>
+</html>
